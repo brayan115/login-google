@@ -1,0 +1,7 @@
+express --view=ejs node_ejs
+npm install
+npm install body-parser
+npm install mongoose
+npm install nodemon
+------------------------------
+npm install passport-google-oauth
