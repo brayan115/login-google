@@ -6,11 +6,12 @@ var logger = require('morgan');
 
 var mongoose =require('mongoose');
 var bodyparser = require('body-parser');
-
-
+var passport = require('passport')
+var passportGoogleOauth20=require('passport-google-oauth20')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authsRouter = require('./routes/auth-routes');
+const passportSetup = require('./config/passport-setup');
 var app = express();
 
 
@@ -45,6 +46,22 @@ app.use('/auth', authsRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+
+
+//Google
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+
 
 // error handler
 app.use(function(err, req, res, next) {
