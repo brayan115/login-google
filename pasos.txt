@@ -4,4 +4,4 @@ npm install body-parser
 npm install mongoose
 npm install nodemon
 ------------------------------
-npm install passport-google-oauth
+npm install passport-google-oauth20
