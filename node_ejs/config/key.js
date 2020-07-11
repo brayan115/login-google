@@ -5,6 +5,10 @@ module.exports={
     },
     mongodb:{
         dbURL:"mongodb+srv://zeus:tecsup123a@cluster0.asbqa.mongodb.net/newgymflex?retryWrites=true&w=majority"
+    },
+    session:{
+        cookieKey:'noentiendoestaparteladieciseis'
     }
+    
 
 };

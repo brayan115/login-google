@@ -13,6 +13,7 @@ var usersRouter = require('./routes/users');
 var authsRouter = require('./routes/auth-routes');
 const passportSetup = require('./config/passport-setup');
 const keys = require('./config/key');
+const cookieSession=require('cookie-session');
 var app = express();
 
 
@@ -41,6 +42,12 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console,'Error de conexion MongoDB'));
 
 
+
+
+app.use(cookieSession({
+  maxAge:24*60*60*1000,
+  keys:[keys.session.cookieKey]
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
