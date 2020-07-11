@@ -12,17 +12,30 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authsRouter = require('./routes/auth-routes');
 const passportSetup = require('./config/passport-setup');
+const keys = require('./config/key');
 var app = express();
 
 
 //Conexion a la BD
-var mongoDB ='mongodb://localhost/newgymflex'
+//var mongoDB ='mongodb://localhost/newgymflex'
 
-
+/*
 mongoose.connect(mongoDB,{
   useNewUrlParser: true,
   useUnifiedTopology: true
-});
+});*/
+/*
+mongoose.connect(keys.mongodb.dbURL,()=>{
+  
+  console.log('conectado a mongo db');
+
+});*/
+ 
+mongoose.connect(keys.mongodb.dbURL,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console,'Error de conexion MongoDB'));
