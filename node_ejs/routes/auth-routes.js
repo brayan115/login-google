@@ -22,7 +22,8 @@ router.get('/google', passport.authenticate('google',{
 //A donde te lleva despues de registrarte
 
 router.get('/google/redirect',passport.authenticate('google'), (req,res)=>{
-    res.send('you reached the callback')
+    //res.send('you reached the callback')
+    res.redirect('/profile');
 });
 
 
