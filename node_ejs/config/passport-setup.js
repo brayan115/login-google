@@ -5,6 +5,16 @@ const keys=require('./key');
 
 const User = require('../model/user');
 
+
+passport.serializeUser((user,done)=>{
+  done(null,user.id);
+})
+passport.deserializeUser((id,done)=>{
+  User.findByd(id).then((user)=>{
+    done(null,user);
+  });
+});
+
 passport.use(new GoogleStrategy({
     clientID: keys.google.clientID,
     clientSecret: keys.google.clientSecret,
@@ -15,6 +25,7 @@ passport.use(new GoogleStrategy({
       if(currentUser){
           //si el usuario es existente
           console.log('user is:',currentUser);
+          done(null,currentUser);
 
       }else{
         new User({
@@ -22,11 +33,12 @@ passport.use(new GoogleStrategy({
           username:profile.displayName,
           googleId:profile.id
         }).save().then((newUser)=>{
-          console.log('new user creado:'+newUser)
+          console.log('new user creado:'+newUser);
+          done(null,newUser);
         });
 
       }
-    })
+    });
 
 
 
