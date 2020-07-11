@@ -8,7 +8,7 @@ const User = require('../model/user');
 
 passport.serializeUser((user,done)=>{
   done(null,user.id);
-})
+}) 
 passport.deserializeUser((id,done)=>{
   User. findById(id).then((user)=>{
     done(null,user);
@@ -21,7 +21,9 @@ passport.use(new GoogleStrategy({
     callbackURL: '/auth/google/redirect'
   },(accessToken, refreshToken, profile, done)=>{
     // verificar si un usuario ya existe  en la bd
+    console.log(profile);
     User.findOne({googleId:profile.id}).then((currentUser)=>{
+      
       if(currentUser){
           //si el usuario es existente
           console.log('user is:',currentUser);
@@ -31,7 +33,8 @@ passport.use(new GoogleStrategy({
         new User({
           //name:profile.name,
           username:profile.displayName,
-          googleId:profile.id
+          googleId:profile.id,
+          picture:profile.photos[0].value,
         }).save().then((newUser)=>{
           console.log('new user creado:'+newUser);
           done(null,newUser);

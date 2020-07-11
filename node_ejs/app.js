@@ -89,6 +89,10 @@ app.get('/auth/google/callback',
     res.redirect('/');
   });
 
+  app.get('/', (req, res) => {
+    res.render('home', { user: req.user });
+});
+
 
 
 // error handler
