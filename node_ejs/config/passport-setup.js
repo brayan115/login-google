@@ -10,15 +10,27 @@ passport.use(new GoogleStrategy({
     clientSecret: keys.google.clientSecret,
     callbackURL: '/auth/google/redirect'
   },(accessToken, refreshToken, profile, done)=>{
-    console.log('passport callback function fired');
-    console.log(profile);
-    new User({
-      
-      username:profile.dispalyName,
-      googleId:profile.id
-    }).save().then((newUser)=>{
-      console.log('new user creado:'+newUser)
+    // verificar si un usuario ya existe  en la bd
+    User.findOne({googleId:profile.id}).then((currentUser)=>{
+      if(currentUser){
+          //si el usuario es existente
+          console.log('user is:',currentUser);
+
+      }else{
+        new User({
+          //name:profile.name,
+          username:profile.displayName,
+          googleId:profile.id
+        }).save().then((newUser)=>{
+          console.log('new user creado:'+newUser)
+        });
+
+      }
     })
+
+
+
+
   })
 );
 /*
